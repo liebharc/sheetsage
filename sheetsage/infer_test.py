@@ -18,7 +18,7 @@ _FISHIN_REF = """
 class TestSheetSage(unittest.TestCase):
     def test_sheetsage(self):
         statuses = []
-        lead_sheet, segment_beats, segment_beats_times = sheetsage(
+        lead_sheet, segment_beats, segment_beats_times, _ignored = sheetsage(
             retrieve_asset("TEST_FISHIN"),
             segment_start_hint=11,
             segment_end_hint=11 + 23.75,
@@ -53,7 +53,7 @@ class TestSheetSage(unittest.TestCase):
 
         # NOTE to future chrisdonahue: To test legacy behavior, need to write out wav file after legacy decode (which uses ffmpeg instead of librosa).
 
-        lead_sheet, segment_beats, segment_beats_times = sheetsage(
+        lead_sheet, segment_beats, segment_beats_times, _ignored = sheetsage(
             retrieve_asset("TEST_FISHIN"), segment_start_hint=11, legacy_behavior=True
         )
 

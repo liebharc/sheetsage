@@ -138,6 +138,7 @@ def retrieve_audio_bytes(
     max_filesize_mb=None,
     max_duration_seconds=None,
     timeout=60.0,
+    separate_melody_accompaniment=True,
 ):
     """Retrieves encoded audio (as raw bytes) from specified URL.
 
@@ -204,6 +205,17 @@ def retrieve_audio_bytes(
             raise Exception(f"Failed to retrieve from {url}:\n{stderr}\n{stdout}")
         assert len(paths) == 1
         path = paths[0]
+        if separate_melody_accompaniment:
+            spleeter_out_dir = pathlib.Path(d).joinpath("output")
+            status, stdout, stderr = run_cmd_sync(f"spleeter separate -p spleeter:2stems -o '{spleeter_out_dir}' '{path}'")
+            if status != 0:
+                raise Exception(f"Failed to split {path}:\n{stderr}\n{stdout}")
+            
+            path_basename = path.name.split(".")[0]
+            path = spleeter_out_dir.joinpath(path_basename, "vocals.wav") 
+            if not path.is_file():
+                raise Exception(f"Split returned no results {path}:\n{stderr}\n{stdout}")
+        
         with open(path, "rb") as f:
             audio_bytes = f.read()
         if return_name:

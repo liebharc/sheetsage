@@ -77,7 +77,7 @@ def _work(wid):
         if stack_trace is None:
             status_change_callback(JobStatus.RUNNING)
             try:
-                lead_sheet, segment_beats, segment_beats_times = sheetsage(
+                lead_sheet, segment_beats, segment_beats_times, _ignored = sheetsage(
                     **job_def, status_change_callback=status_change_callback
                 )
                 output_path = pathlib.Path(ARGS["tmp_dir"], f"{jid}.json")

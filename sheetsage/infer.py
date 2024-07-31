@@ -704,7 +704,7 @@ def sheetsage(
     )
 
     status_change_callback(Status.DONE)
-    result = lead_sheet, segment_beats, segment_beats_times
+    result = lead_sheet, segment_beats, segment_beats_times, audio_path_or_bytes
     if return_intermediaries:
         result = result + (chunks_tertiaries, melody_logits, harmony_logits)
     return result
@@ -834,7 +834,7 @@ if __name__ == "__main__":
 
     logging.basicConfig(level=logging.INFO)
 
-    lead_sheet, segment_beats, segment_beats_times = sheetsage(
+    lead_sheet, segment_beats, segment_beats_times, audio_bytes = sheetsage(
         args.audio_path_or_url,
         segment_start_hint=args.segment_start_hint,
         segment_end_hint=args.segment_end_hint,
@@ -879,3 +879,7 @@ if __name__ == "__main__":
                 )
             )
         )
+
+    # Write input
+    with open(pathlib.Path(output_dir, "input.wav"), "wb") as f:
+        f.write(audio_bytes)

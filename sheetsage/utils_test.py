@@ -102,7 +102,7 @@ class TestUtils(unittest.TestCase):
         with self.assertRaises(subprocess.TimeoutExpired):
             retrieve_audio_bytes(youtube_url, timeout=1e-3)
         with self.assertRaisesRegex(Exception, "Unsupported URL"):
-            retrieve_audio_bytes("https://www.chrisdonahue.com")
+            retrieve_audio_bytes("https://www.google.com")
         with self.assertRaisesRegex(Exception, "Failed to retrieve"):
             retrieve_audio_bytes("https://www.youtube.com/watch?v=00000000000")
         with self.assertRaisesRegex(ValueError, "Specified url is too large"):

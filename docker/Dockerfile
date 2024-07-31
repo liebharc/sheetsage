@@ -18,7 +18,7 @@ RUN python -m pip install --no-cache-dir jupyter matplotlib
 
 # Install ffmpeg
 RUN apt-get install -y software-properties-common
-RUN apt-get update && apt-get install -y ffmpeg
+RUN apt-get update && apt-get install -y ffmpeg libsndfile1
 
 # Install Jukebox
 RUN python -m pip install --no-cache-dir torch==1.12.0+cu113 --extra-index-url  https://download.pytorch.org/whl/cu113
@@ -67,6 +67,10 @@ RUN python -m pip install --no-cache-dir validators==0.20.0
 RUN python -m pip install --no-cache-dir requests==2.26.0
 RUN python -m pip install --no-cache-dir Flask==2.0.3
 RUN python -m pip install --no-cache-dir Flask-Cors==3.0.10
+
+# Install spleeter
+RUN pip install musdb museval
+RUN pip install spleeter==2.4.0
 
 # Create workdir and cache
 ARG WORKDIR=/sheetsage
